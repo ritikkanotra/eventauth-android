@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_heading"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:fontFamily="@font/nunito_extrabold"-->
+<!--        android:text="@string/login"-->
+<!--        android:textSize="24sp" />-->
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@android:color/holo_blue_dark"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_marginBottom="40dp"
+            android:textSize="35sp"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="false"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:onClick="loginGoogle">
+
+            <LinearLayout
+                android:layout_marginHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/icons8_google_48"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"/>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/nunito"
+                    android:text="@string/login_google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

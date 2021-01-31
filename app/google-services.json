@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "745918612413",
+    "firebase_url": "https://eventauth-c359b.firebaseio.com",
+    "project_id": "eventauth-c359b",
+    "storage_bucket": "eventauth-c359b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745918612413:android:89dfa3c208ff186e0648d4",
+        "android_client_info": {
+          "package_name": "com.appodex.eventauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745918612413-btug6um23fa0lbhgo5e5gtl2p6uvl9pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8RIL9iJSwX0p-fhiU6JFVCph0rxAClao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745918612413-btug6um23fa0lbhgo5e5gtl2p6uvl9pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
