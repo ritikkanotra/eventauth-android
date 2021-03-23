@@ -4,10 +4,11 @@
         <item name="themeName">dark</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/material_dark_grey</item>
+<!--        <item name="colorPrimaryVariant">@color/material_dark_grey</item>-->
+        <item name="colorPrimaryVariant">@color/dark_blue</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">?android:attr/textColor</item>
+        <item name="colorSecondary">@color/light_orange</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorCard">#1F1F1F</item>

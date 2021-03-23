@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EventsFragment extends Fragment {
 
@@ -28,6 +32,7 @@ public class EventsFragment extends Fragment {
     RegisteredEventsAdapter registeredEventsAdapter;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
+    LinearLayout llLottieNoEvent;
 
     @Nullable
     @Override
@@ -43,6 +48,9 @@ public class EventsFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
+
+        llLottieNoEvent = view.findViewById(R.id.ll_lottie_no_event);
+        llLottieNoEvent.setVisibility(View.GONE);
 
         registeredEventsList = new ArrayList<>();
 
@@ -117,6 +125,7 @@ public class EventsFragment extends Fragment {
     }
 
     void getEventInfo(ArrayList<String> registeredEventsId, ArrayList<String> registeredEventsUCode) {
+        Date currentDate = new Date();
         Utils.firebaseDatabaseRef
                 .child("Events")
                 .addValueEventListener(new ValueEventListener() {
@@ -134,7 +143,13 @@ public class EventsFragment extends Fragment {
                                             childSnapshot.child("time").getValue().toString(),
                                             childSnapshot.child("cover_image").getValue().toString()
                                             );
-                                    registeredEventsList.add(event);
+                                    try {
+                                        if ((new SimpleDateFormat("dd/MM/yyyy")).parse(event.getDate()).compareTo(currentDate) >= 0) {
+                                            registeredEventsList.add(event);
+                                        }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                             setRecyclerViewAdapter(registeredEventsUCode);
@@ -149,9 +164,15 @@ public class EventsFragment extends Fragment {
     }
 
     void setRecyclerViewAdapter(ArrayList<String> registeredEventsUCode) {
-        registeredEventsAdapter = new RegisteredEventsAdapter(getContext(), registeredEventsList, registeredEventsUCode);
-        registeredEventsRecyclerView.setAdapter(registeredEventsAdapter);
+        if (registeredEventsList.isEmpty()) {
+            llLottieNoEvent.setVisibility(View.VISIBLE);
+        }
+        else {
+            registeredEventsAdapter = new RegisteredEventsAdapter(getContext(), registeredEventsList, registeredEventsUCode);
+            registeredEventsRecyclerView.setAdapter(registeredEventsAdapter);
+        }
         progressBar.setVisibility(View.GONE);
+
     }
 
 }

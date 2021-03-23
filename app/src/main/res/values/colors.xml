@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_grey">#242424</color>
     <color name="material_dark_grey">#121212</color>
+    <color name="dark_blue">#1E073D</color>
+    <color name="light_orange">#FFBC66</color>
 </resources>

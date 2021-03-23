@@ -72,12 +72,12 @@
             <ImageView
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:padding="14dp"
+                android:padding="8dp"
                 android:id="@+id/btn_scan_qr"
-                android:src="@drawable/qr_code_scan_icon"
+                android:src="@drawable/qr_code_scan_2"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_width="63dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:focusable="true" />
 

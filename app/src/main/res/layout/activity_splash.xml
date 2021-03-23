@@ -4,22 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_blue"
     tools:context=".SplashActivity">
 
-    <ImageView
-        android:id="@+id/iv_logo"
-        android:src="@drawable/eventauth_logo_dark"
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_logo"-->
+<!--        android:src="@drawable/eventauth_icon"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="150dp"/>-->
+
+<!--    <ImageView-->
+<!--        android:layout_above="@id/main_logo"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:src="@drawable/evenauth_icon_main"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="120dp"/>-->
+
+    <TextView
+        android:id="@+id/main_logo"
         android:layout_centerInParent="true"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_ill_iv"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/bungee_inline"
+        android:text="@string/app_name"
+        android:textColor="#FFC0B8"
+        android:textSize="40sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:src="@drawable/tagline_logo"
+        android:layout_below="@id/main_logo"/>
+
 
     <ImageView
         android:id="@+id/iv_ritikkanotra_logo"
-        android:alpha="0.5"
+        android:alpha="0.3"
         android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ritikkanotra_logo_light"
+        android:src="@drawable/appodex_dev_ico_light"
         android:layout_width="130dp"
         android:layout_height="50dp"/>
 

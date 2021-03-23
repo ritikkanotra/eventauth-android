@@ -28,13 +28,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        logoImageView = findViewById(R.id.iv_logo);
+//        logoImageView = findViewById(R.id.iv_logo);
         ritikkanotraImageView = findViewById(R.id.iv_ritikkanotra_logo);
 
         TypedValue outValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.themeName, outValue, true);
         if ("light".equals(outValue.string)) {
-            logoImageView.setImageResource(R.drawable.eventauth_logo_light);
+//            logoImageView.setImageResource(R.drawable.eventauth_logo_light);
             ritikkanotraImageView.setImageResource(R.drawable.ritikkanotra_logo_dark);
         }
 

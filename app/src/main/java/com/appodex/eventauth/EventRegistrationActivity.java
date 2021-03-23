@@ -265,6 +265,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
     }
 
     private void shareEvent() {
+        actionBtn.setVisibility(View.INVISIBLE);
+        actionBtnProgressBar.setVisibility(View.VISIBLE);
         Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance()
                 .createDynamicLink()
                 .setLink(Uri.parse("https://eventauth.page.link?event_id=" + event.getEventId()))
@@ -284,6 +286,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
                             intent.setType("text/plain");
                             intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
                             startActivity(Intent.createChooser(intent,"Share").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                            actionBtn.setVisibility(View.VISIBLE);
+                            actionBtnProgressBar.setVisibility(View.GONE);
                         } else {
                             // Error
                             // ...
