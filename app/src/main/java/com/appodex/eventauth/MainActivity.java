@@ -128,15 +128,18 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                Glide.with(MainActivity.this)
+                        .load(mAuth.getCurrentUser().getPhotoUrl())
+                        .circleCrop()
+                        .into(userPhotoImageView);
             }
-        }, 2000);
+        }, 1000);
 
 //        Log.i("rk_debug_main", mAuth.getCurrentUser().getEmail());
-        Glide.with(MainActivity.this)
-                .load(mAuth.getCurrentUser().getPhotoUrl())
-                .circleCrop()
-                .into(userPhotoImageView);
+//        Glide.with(MainActivity.this)
+//                .load(mAuth.getCurrentUser().getPhotoUrl())
+//                .circleCrop()
+//                .into(userPhotoImageView);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -171,8 +174,9 @@ public class MainActivity extends AppCompatActivity {
                             changeFragment();
                             break;
                         case R.id.item_settings:
-                            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                            startActivity(intent);
+                            selectedFragment = new SettingsFragment();
+                            selectedHeading = R.string.settings;
+                            changeFragment();
                             break;
 
                     }

@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                                         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                                             @Override
                                             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                                Toast.makeText(getApplicationContext(), "Login Successful",
+                                                        Toast.LENGTH_SHORT).show();
                                                 startActivity(intent);
                                                 finish();
                                             }
