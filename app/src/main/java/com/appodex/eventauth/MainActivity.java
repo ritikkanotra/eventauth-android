@@ -64,56 +64,56 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        CURRENT_VERSION = getCurrentVersion();
-        realVersion = null;
+//        CURRENT_VERSION = getCurrentVersion();
+//        realVersion = null;
         checkPermissions();
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
 
-        mDatabaseRef.child("app_version").child("version_no").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                realVersion = dataSnapshot.getValue().toString();
-                Log.i("testing", realVersion);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        final String[][] newChanges = new String[1][1];
-
-        mDatabaseRef.child("app_version").child("version_change").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                updateChanges = dataSnapshot.getValue().toString();
-                Log.i("testing", updateChanges);
-
-                newChanges[0] = updateChanges.split("///");
-                editedChanges = "";
-                for(int i = 0; i < newChanges[0].length; i++) {
-                    editedChanges += (i + 1) + ". " +  newChanges[0][i] + "\n";
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+//        mDatabaseRef.child("app_version").child("version_no").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                realVersion = dataSnapshot.getValue().toString();
+//                Log.i("testing", realVersion);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        final String[][] newChanges = new String[1][1];
+//
+//        mDatabaseRef.child("app_version").child("version_change").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                updateChanges = dataSnapshot.getValue().toString();
+//                Log.i("testing", updateChanges);
+//
+//                newChanges[0] = updateChanges.split("///");
+//                editedChanges = "";
+//                for(int i = 0; i < newChanges[0].length; i++) {
+//                    editedChanges += (i + 1) + ". " +  newChanges[0][i] + "\n";
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 
-        realVersionDownloadUrl = getRealVersionDownloadUrl();
+
+
+//        realVersionDownloadUrl = getRealVersionDownloadUrl();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -142,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
 //                .circleCrop()
 //                .into(userPhotoImageView);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                checkVersion();
-
-            }
-        }, 5000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                checkVersion();
+//
+//            }
+//        }, 5000);
 
 
     }
