@@ -1,8 +1,11 @@
 package com.appodex.eventauth;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
@@ -32,12 +37,15 @@ import java.util.Objects;
 public class EventRegistrationActivity extends AppCompatActivity {
 
     private ImageView eventCoverImageView, backBtn;
-    private MaterialButton actionBtn;
+    private MaterialButton actionBtn, delButton;
     private TextView eventNameTextView, dateTextView, timeTextView, aboutTextView;
     private ProgressBar actionBtnProgressBar;
     private View mainProgressBarLayout;
 //    private ShimmerFrameLayout shimmerFrameEventCover, shimmerFrameEventDetails;
     int intentType;
+    private AlertDialog deleteAlertDialog;
+    private ProgressDialog progressDialog;
+
 
     Intent receivedIntent;
 
@@ -59,6 +67,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         eventCoverImageView = findViewById(R.id.iv_event_cover);
         actionBtnProgressBar = findViewById(R.id.pb_action_btn);
         mainProgressBarLayout = findViewById(R.id.pb_layout);
+        delButton = findViewById(R.id.del_event_btn);
 //        shimmerFrameEventCover = findViewById(R.id.shimmer_frame_event_cover);
 //        shimmerFrameEventDetails = findViewById(R.id.shimmer_frame_event_details);
 
@@ -72,6 +81,29 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(task -> {
             finish();
+        });
+
+        delButton.setOnClickListener(task -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(R.drawable.ic_baseline_delete_outline_24);
+            builder.setTitle("Delete Event");
+            builder.setMessage("Do you want to delete this event permanently?");
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteEvent();
+//                    finish();
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteAlertDialog.cancel();
+                }
+            });
+            deleteAlertDialog = builder.create();
+            deleteAlertDialog.show();
+
         });
 
         receivedIntent = getIntent();
@@ -137,6 +169,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         }
         else if (intentType == Utils.TYPE_REGISTER) {
             actionBtn.setText(R.string.register);
+            delButton.setVisibility(View.GONE);
 
         }
 
@@ -306,6 +339,45 @@ public class EventRegistrationActivity extends AppCompatActivity {
 //        Log.i("rk_debug", dynamicLinkUri.toString());
 
 
+    }
+
+    private void deleteEvent() {
+        progressDialog = new ProgressDialog(EventRegistrationActivity.this);
+        progressDialog.setMessage("Deleting Event");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String eventId = event.getEventId();
+        Utils.firebaseDatabaseRef
+                .child("Events")
+                .orderByChild("id")
+                .equalTo(eventId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                Log.i("rk_debug", dataSnapshot.getKey());
+                                Utils.firebaseDatabaseRef
+                                        .child("Events")
+                                        .child(dataSnapshot.getKey())
+                                        .removeValue()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(EventRegistrationActivity.this, "Event Deleted", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
+                                        });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+
+                    }
+                });
     }
 
 }
