@@ -33,6 +33,7 @@ public class DashboardFragment extends Fragment {
     FloatingActionButton createEVentBtn;
     RecyclerView myEventsRecyclerView;
     ProgressBar progressBar;
+    MyEventsAdapter myEventsAdapter;
 
     FirebaseAuth mAuth;
 
@@ -60,6 +61,7 @@ public class DashboardFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         List<Event> myEventsList = new ArrayList<>();
+        List<String> keyList = new ArrayList<>();
 
         if (new Utils().isInternetConnected(getContext())) {
             Utils.firebaseDatabaseRef
@@ -67,6 +69,7 @@ public class DashboardFragment extends Fragment {
                     .addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                            myEventsList.clear();
                             Map<String, String> map = (Map<String, String>) snapshot.getValue();
                             if (map.get("owner").equals(mAuth.getCurrentUser().getEmail())) {
                                 myEventsList.add(0, new Event(map.get("id"),
@@ -75,10 +78,13 @@ public class DashboardFragment extends Fragment {
                                         map.get("date"),
                                         map.get("time"),
                                         map.get("cover_image")));
+                                keyList.add(0, snapshot.getKey());
                             }
-                            MyEventsAdapter myEventsAdapter = new MyEventsAdapter(getContext(), myEventsList);
+
+                            myEventsAdapter = new MyEventsAdapter(getContext(), myEventsList);
                             myEventsRecyclerView.setAdapter(myEventsAdapter);
                             progressBar.setVisibility(View.GONE);
+                            myEventsAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -88,7 +94,9 @@ public class DashboardFragment extends Fragment {
 
                         @Override
                         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                            int index = keyList.indexOf(snapshot.getKey());
+                            myEventsList.remove(index);
+                            myEventsAdapter.notifyDataSetChanged();
                         }
 
                         @Override

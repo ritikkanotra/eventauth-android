@@ -164,19 +164,37 @@
 
 
     <RelativeLayout
+        android:paddingHorizontal="20dp"
         android:id="@+id/btn_frame"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="7dp"
             android:id="@+id/action_btn"
             android:text="@string/register"
-            android:backgroundTint="@android:color/holo_green_light"
+            android:textColor="@android:color/white"
+            android:layout_toLeftOf="@id/del_event_btn"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginStart="10dp"
+            app:icon="@drawable/ic_baseline_delete_outline_24"
+            app:iconSize="28dp"
+            app:iconTint="@android:color/white"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:id="@+id/del_event_btn"
+            android:layout_alignParentEnd="true"
+            android:layout_marginVertical="7dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+
+
+
+        </com.google.android.material.button.MaterialButton>
 
         <ProgressBar
             android:id="@+id/pb_action_btn"
