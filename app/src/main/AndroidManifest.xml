@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_main_party_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventAuth">
-        <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".QRCodeActivity" />
         <activity android:name=".EventRegistrationActivity">
             <intent-filter>

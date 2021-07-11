@@ -54,6 +54,7 @@ public class EventsFragment extends Fragment {
 
         registeredEventsList = new ArrayList<>();
 
+
         updateRegisteredEvents();
 
 //        registeredEventsList.add(new Event(
