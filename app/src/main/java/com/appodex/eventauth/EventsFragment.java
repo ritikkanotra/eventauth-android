@@ -135,6 +135,7 @@ public class EventsFragment extends Fragment {
                             Iterable<DataSnapshot> sp1 = snapshot.getChildren();
                             for (DataSnapshot childSnapshot: sp1) {
                                 if (registeredEventsId.contains(childSnapshot.child("id").getValue().toString())) {
+                                    Log.i("rk+debug" ,childSnapshot.child("name").getValue().toString());
                                     Event event = new Event(
                                             childSnapshot.child("id").getValue().toString(),
                                             childSnapshot.child("name").getValue().toString(),
