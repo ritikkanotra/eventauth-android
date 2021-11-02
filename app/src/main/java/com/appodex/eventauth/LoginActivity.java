@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
     private FirebaseAuth mAuth;
+    GoogleSignInAccount account;
+    private boolean isRedirected;
 
 
     @Override
@@ -53,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
 
+        isRedirected = getIntent().getBooleanExtra("isRedirected", false);
+
     }
 
     public void loginGoogle(View view) {
@@ -69,64 +73,13 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+                account = task.getResult(ApiException.class);
                 Log.d("rk_debug", "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
 
-                if (new Utils().isInternetConnected(getApplicationContext())) {
-                    FirebaseDatabase.getInstance()
-                            .getReference()
-                            .child("Users")
-                            .orderByChild("email")
-                            .equalTo(account.getEmail())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (!snapshot.exists()) {
-                                        Map<String, String> infoMap = new HashMap<>();
-                                        infoMap.put("email", account.getEmail());
-                                        infoMap.put("name", account.getDisplayName());
-                                        infoMap.put("uid", mAuth.getCurrentUser().getUid());
+                Log.d("rk_debug", "1this");
 
-                                        FirebaseDatabase.getInstance()
-                                                .getReference()
-                                                .child("Users")
-                                                .push()
-                                                .setValue(infoMap)
-                                                .addOnSuccessListener(task -> {
-                                                    Toast.makeText(getApplicationContext(), "Registered Successfully",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                                    mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                                        @Override
-                                                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
-                                                    });
-                                                });
 
-                                    }
-                                    else {
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                            @Override
-                                            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                                Toast.makeText(getApplicationContext(), "Login Successful",
-                                                        Toast.LENGTH_SHORT).show();
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                }
 
 
             } catch (ApiException e) {
@@ -134,6 +87,70 @@ public class LoginActivity extends AppCompatActivity {
                 Log.w("rk_debug", "Google sign in failed", e);
                 // ...
             }
+        }
+    }
+
+    private void firebaseWork() {
+        if (new Utils().isInternetConnected(getApplicationContext())) {
+            FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Users")
+                .orderByChild("email")
+                .equalTo(account.getEmail())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("rk_debug", "2this");
+                        if (!snapshot.exists()) {
+                            Log.d("rk_debug", "3this");
+                            Map<String, String> infoMap = new HashMap<>();
+                            infoMap.put("email", account.getEmail());
+                            infoMap.put("name", account.getDisplayName());
+                            infoMap.put("uid", mAuth.getCurrentUser().getUid());
+
+                            FirebaseDatabase.getInstance()
+                                    .getReference()
+                                    .child("Users")
+                                    .push()
+                                    .setValue(infoMap)
+                                    .addOnSuccessListener(task -> {
+                                        Toast.makeText(getApplicationContext(), "Registered Successfully",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                                            @Override
+                                            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                                if (!isRedirected) {
+                                                    startActivity(intent);
+                                                }
+                                                finish();
+                                            }
+                                        });
+                                    });
+
+                        }
+                        else {
+                            Log.d("rk_debug", "4this");
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                                @Override
+                                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                    Toast.makeText(getApplicationContext(), "Login Successful",
+                                            Toast.LENGTH_SHORT).show();
+                                    if (!isRedirected) {
+                                        startActivity(intent);
+                                    }
+                                    finish();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
         }
     }
 
@@ -147,6 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
 //                            new Utils().retrieveInfo();
                             Log.d("rk_debug", "signInWithCredential:success");
+                            firebaseWork();
 //                            Toast.makeText(getApplicationContext(), R.string.login_success,
 //                                    Toast.LENGTH_SHORT).show();
 //                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);

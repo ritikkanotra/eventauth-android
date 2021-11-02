@@ -30,7 +30,6 @@ import java.util.Map;
 
 public class DashboardFragment extends Fragment {
 
-    FloatingActionButton createEVentBtn;
     RecyclerView myEventsRecyclerView;
     ProgressBar progressBar;
     MyEventsAdapter myEventsAdapter;
@@ -45,12 +44,6 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-
-        createEVentBtn = view.findViewById(R.id.btn_create_event);
-        createEVentBtn.setOnClickListener(task -> {
-            Intent intent = new Intent(getContext(), CreateEventActivity.class);
-            startActivity(intent);
-        });
 
         myEventsRecyclerView = view.findViewById(R.id.rv_my_events);
         myEventsRecyclerView.hasFixedSize();

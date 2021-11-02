@@ -38,7 +38,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
     private ImageView eventCoverImageView, backBtn;
     private MaterialButton actionBtn, delButton;
-    private TextView eventNameTextView, dateTextView, timeTextView, aboutTextView;
+    private TextView eventNameTextView, dateTextView, timeTextView, aboutTextView, headingTextView;
     private ProgressBar actionBtnProgressBar;
     private View mainProgressBarLayout;
 //    private ShimmerFrameLayout shimmerFrameEventCover, shimmerFrameEventDetails;
@@ -59,11 +59,22 @@ public class EventRegistrationActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+        if (Utils.firebaseAuth.getCurrentUser() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("isRedirected", true);
+            startActivity(intent);
+
+        }
+
+        Log.d("rk_debug", "now");
+
+
 
         eventNameTextView = findViewById(R.id.tv_event_name);
         dateTextView = findViewById(R.id.tv_event_date);
         timeTextView = findViewById(R.id.tv_event_time);
         aboutTextView = findViewById(R.id.tv_event_about);
+        headingTextView = findViewById(R.id.tv_heading);
         eventCoverImageView = findViewById(R.id.iv_event_cover);
         actionBtnProgressBar = findViewById(R.id.pb_action_btn);
         mainProgressBarLayout = findViewById(R.id.pb_layout);
@@ -112,11 +123,16 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
         Log.i("rk_debug", Integer.toString(intentType));
 
+        while (Utils.firebaseAuth.getCurrentUser() == null) {
+            Log.d("rk_debug", "while");
+        }
+
 
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
                 .addOnSuccessListener(pendingDynamicLinkData -> {
                     if (pendingDynamicLinkData != null) {
+                        Log.d("rk_debug", "not_null");
                         String eventId = Objects.requireNonNull(pendingDynamicLinkData
                                 .getLink()).getQueryParameter("event_id");
                         Utils.firebaseDatabaseRef
@@ -147,6 +163,9 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
                                     }
                                 });
+                    }
+                    else  {
+                        Log.d("rk_debug", "is_null");
                     }
                 });
 
@@ -206,7 +225,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
                 .into(eventCoverImageView);
 
 
-        eventNameTextView.setText(event.getName()); ;
+        eventNameTextView.setText(event.getName());
+        headingTextView.setText(event.getName());
         dateTextView.setText(event.getDate());
         timeTextView.setText(event.getTime());
         aboutTextView.setText(event.getSummary());
@@ -380,4 +400,9 @@ public class EventRegistrationActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("rk_debug", "pauseER");
+    }
 }

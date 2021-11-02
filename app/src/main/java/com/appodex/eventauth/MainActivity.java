@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private TextView headingTextView;
     private ImageView userPhotoImageView;
+    private ImageView btnCreateEvent;
 
 
     private String CURRENT_VERSION;
@@ -120,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
         headingTextView = findViewById(R.id.tv_heading);
         userPhotoImageView = findViewById(R.id.iv_user_photo);
 
+        btnCreateEvent = findViewById(R.id.btn_create_event);
+        btnCreateEvent.setOnClickListener(task -> {
+            Intent intent = new Intent(this, CreateEventActivity.class);
+            startActivity(intent);
+        });
+        hideBtnCreateEvent();
+
         bottomNav = findViewById(R.id.bottom_nav_view);
         bottomNav.setOnNavigationItemSelectedListener(bottomNavItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(
@@ -191,6 +200,13 @@ public class MainActivity extends AppCompatActivity {
 
 //                    getSupportFragmentManager().beginTransaction().hide(
 //                            R.id.fragment_container, selectedFragment).commit();
+
+                    if (selectedHeading == R.string.my_events) {
+                        showBtnCreateEvent();
+                    }
+                    else {
+                        hideBtnCreateEvent();
+                    }
 
                     headingTextView.setText(selectedHeading);
                 }
@@ -310,6 +326,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void showBtnCreateEvent() {
+        btnCreateEvent.setVisibility(View.VISIBLE);
+    }
+
+    private void hideBtnCreateEvent() {
+        btnCreateEvent.setVisibility(View.GONE);
+    }
+
     private String getCurrentVersion() {
 
         String currentVersion = null;
@@ -334,6 +358,16 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     },
                     1);
+
+        }
+
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{
+                            Manifest.permission.CAMERA
+                    },
+                    2);
 
         }
 
