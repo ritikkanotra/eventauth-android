@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +31,7 @@ public class EventsFragment extends Fragment {
     RecyclerView registeredEventsRecyclerView;
     ArrayList<Event> registeredEventsList;
     RegisteredEventsAdapter registeredEventsAdapter;
-    ProgressBar progressBar;
+    LottieAnimationView progressBar;
     FirebaseAuth mAuth;
     LinearLayout llLottieNoEvent;
 
