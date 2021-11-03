@@ -19,6 +19,8 @@
 <!--        android:text="@string/login"-->
 <!--        android:textSize="24sp" />-->
 
+
+
     <ImageView
         android:id="@+id/login_ill_iv"
         android:layout_width="match_parent"
@@ -159,6 +161,26 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="20dp"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:lottie_url="https://assets9.lottiefiles.com/packages/lf20_QPDjb9.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:background="@color/black"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </RelativeLayout>

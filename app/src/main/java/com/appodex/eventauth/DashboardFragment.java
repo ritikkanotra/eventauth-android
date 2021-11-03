@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +32,7 @@ import java.util.Map;
 public class DashboardFragment extends Fragment {
 
     RecyclerView myEventsRecyclerView;
-    ProgressBar progressBar;
+    LottieAnimationView progressBar;
     MyEventsAdapter myEventsAdapter;
 
     FirebaseAuth mAuth;
