@@ -50,6 +50,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
     Intent receivedIntent;
 
     Event event;
+    String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +60,15 @@ public class EventRegistrationActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        if (Utils.firebaseAuth.getCurrentUser() == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("isRedirected", true);
-            startActivity(intent);
-
-        }
+//        if (Utils.firebaseAuth.getCurrentUser() == null) {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            Log.i("rk_debug", "isRedirected");
+//            intent.putExtra("isRedirected", true);
+//            intent.putExtra("eventId", event.getEventId());
+//            startActivity(intent);
+//            finish();
+//
+//        }
 
         Log.d("rk_debug", "now");
 
@@ -118,14 +122,16 @@ public class EventRegistrationActivity extends AppCompatActivity {
         });
 
         receivedIntent = getIntent();
+
         intentType = receivedIntent.getIntExtra("type", 2);
-        event = (Event) receivedIntent.getSerializableExtra("event");
+//        event = (Event) receivedIntent.getSerializableExtra("event");
+        eventId = receivedIntent.getStringExtra("eventId");
 
         Log.i("rk_debug", Integer.toString(intentType));
 
-        while (Utils.firebaseAuth.getCurrentUser() == null) {
-            Log.d("rk_debug", "while");
-        }
+//        while (Utils.firebaseAuth.getCurrentUser() == null) {
+//            Log.d("rk_debug", "while");
+//        }
 
 
         FirebaseDynamicLinks.getInstance()
@@ -135,34 +141,9 @@ public class EventRegistrationActivity extends AppCompatActivity {
                         Log.d("rk_debug", "not_null");
                         String eventId = Objects.requireNonNull(pendingDynamicLinkData
                                 .getLink()).getQueryParameter("event_id");
-                        Utils.firebaseDatabaseRef
-                                .child("Events")
-                                .orderByChild("id")
-                                .equalTo(eventId)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.exists()) {
-                                            for (DataSnapshot data: snapshot.getChildren()) {
-
-                                                event = new Event(data.child("id").getValue().toString(),
-                                                        data.child("name").getValue().toString(),
-                                                        data.child("about").getValue().toString(),
-                                                        data.child("date").getValue().toString(),
-                                                        data.child("time").getValue().toString(),
-                                                        data.child("cover_image").getValue().toString());
-
-                                                displayEventData(event);
-                                                updateRegisterStatus();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                        Log.d("rk_debug", eventId);
+                        checkLogin(eventId);
+                        getEvent(eventId);
                     }
                     else  {
                         Log.d("rk_debug", "is_null");
@@ -177,9 +158,11 @@ public class EventRegistrationActivity extends AppCompatActivity {
         actionBtn.setVisibility(View.INVISIBLE);
         actionBtnProgressBar.setVisibility(View.VISIBLE);
 
-        if (event != null) {
-            displayEventData(event);
-            updateRegisterStatus();
+        if (eventId != null) {
+            Log.i("rk_debug", "isNotNULL");
+//            displayEventData(event);
+//            updateRegisterStatus();
+            getEvent(eventId);
 //            actionBtn.setVisibility(View.VISIBLE);
         }
 
@@ -255,6 +238,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
                                         + event.getEventId();
                                 map.put("uniqueCode", uniqueCode);
 
+                                Log.d("rk_debug UC", uniqueCode);
+
 
                                 Utils.firebaseDatabaseRef
                                         .child("Users")
@@ -264,6 +249,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
                                         .updateChildren(map);
 
                                 updateRegisterStatus();
+
+                                Utils.registeredEventsUCode.add(uniqueCode);
                             }
                         }
                     }
@@ -295,9 +282,13 @@ public class EventRegistrationActivity extends AppCompatActivity {
                                     actionBtn.setTextColor(getColor(R.color.white));
                                     actionBtn.setOnClickListener(task -> {
                                         Intent intent = new Intent(EventRegistrationActivity.this, QRCodeActivity.class);
-                                        intent.putExtra("uniqueCode",
-                                                Utils.registeredEventsUCode
-                                                        .get(receivedIntent.getIntExtra("position", 0)));
+                                        Log.d("rk_debug", "pos" + Utils.registeredEventsUCode.size());
+                                        String uCode = Utils.firebaseAuth.getCurrentUser().getUid() + eventId;
+                                        Log.d("rk_debug", "onDataChange-ucode: " + uCode);
+//                                        intent.putExtra("uniqueCode",
+//                                                Utils.registeredEventsUCode
+//                                                        .get(receivedIntent.getIntExtra("position", 0)));
+                                        intent.putExtra("uniqueCode", uCode);
                                         startActivity(intent);
                                     });
 //                                    actionBtn.setEnabled(false);
@@ -337,7 +328,9 @@ public class EventRegistrationActivity extends AppCompatActivity {
                             Log.i("rk_debug", shortLink.toString());
                             Intent intent = new Intent(new Intent(Intent.ACTION_SEND));
                             intent.setType("text/plain");
-                            intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                            String messageToSend = "Register in \"" + event.getName() + "\" Event.\n\n"
+                                    + event.getSummary() + "\n\nRegister Now - " + shortLink.toString();
+                            intent.putExtra(Intent.EXTRA_TEXT, messageToSend);
                             startActivity(Intent.createChooser(intent,"Share").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                             actionBtn.setVisibility(View.VISIBLE);
                             actionBtnProgressBar.setVisibility(View.GONE);
@@ -404,5 +397,53 @@ public class EventRegistrationActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("rk_debug", "pauseER");
+    }
+
+    private void checkLogin(String eventId) {
+        if (Utils.firebaseAuth.getCurrentUser() == null) {
+            Intent loginIntent = new Intent(EventRegistrationActivity.this, LoginActivity.class);
+            loginIntent.putExtra("eventId", eventId);
+            loginIntent.putExtra("isRedirected", true);
+            startActivity(loginIntent);
+            finish();
+        }
+        else {
+            Log.d("rk_debug", "kartik");
+        }
+        return;
+    }
+
+    private void getEvent(String eventId) {
+        Utils.firebaseDatabaseRef
+                .child("Events")
+                .orderByChild("id")
+                .equalTo(eventId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Log.d("rk_debug", eventId);
+                            for (DataSnapshot data: snapshot.getChildren()) {
+
+                                event = new Event(data.child("id").getValue().toString(),
+                                        data.child("name").getValue().toString(),
+                                        data.child("about").getValue().toString(),
+                                        data.child("date").getValue().toString(),
+                                        data.child("time").getValue().toString(),
+                                        data.child("cover_image").getValue().toString());
+
+//                                checkLogin(event);
+
+                                displayEventData(event);
+                                updateRegisterStatus();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

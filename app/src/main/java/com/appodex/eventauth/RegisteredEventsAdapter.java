@@ -48,7 +48,7 @@ public class RegisteredEventsAdapter extends RecyclerView.Adapter<RegisteredEven
         holder.itemView.setOnClickListener(task -> {
             Intent intent = new Intent(mContext, EventRegistrationActivity.class);
             intent.putExtra("type", Utils.TYPE_REGISTER);
-            intent.putExtra("event", registeredEventsList.get(position));
+            intent.putExtra("eventId", registeredEventsList.get(position).getEventId());
             intent.putExtra("position", position);
             mContext.startActivity(intent);
         });

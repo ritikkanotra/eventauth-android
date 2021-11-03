@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     GoogleSignInAccount account;
     private boolean isRedirected;
+    private Intent intent;
 
 
     @Override
@@ -55,7 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
 
-        isRedirected = getIntent().getBooleanExtra("isRedirected", false);
+        intent = getIntent();
+
+        isRedirected =intent.getBooleanExtra("isRedirected", false);
 
     }
 
@@ -131,14 +134,20 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             Log.d("rk_debug", "4this");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
                             mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                                 @Override
                                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                                     Toast.makeText(getApplicationContext(), "Login Successful",
                                             Toast.LENGTH_SHORT).show();
                                     if (!isRedirected) {
-                                        startActivity(intent);
+                                        startActivity(intentMain);
+                                    }
+                                    else {
+                                        Intent intentRedirect = new Intent(LoginActivity.this,
+                                                EventRegistrationActivity.class);
+                                        intentRedirect.putExtra("eventId", intent.getStringExtra("eventId"));
+                                        startActivity(intentRedirect);
                                     }
                                     finish();
                                 }

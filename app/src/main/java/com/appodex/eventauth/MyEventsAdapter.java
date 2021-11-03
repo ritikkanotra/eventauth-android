@@ -58,7 +58,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
         holder.itemView.setOnClickListener(task -> {
             Intent intent = new Intent(mContext, EventRegistrationActivity.class);
             intent.putExtra("type", Utils.TYPE_SHARE);
-            intent.putExtra("event", mMyEventsList.get(position));
+            intent.putExtra("eventId", mMyEventsList.get(position).getEventId());
             intent.putExtra("position", position);
             mContext.startActivity(intent);
         });
