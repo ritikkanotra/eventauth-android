@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInAccount account;
     private boolean isRedirected;
     private Intent intent;
+    private MaterialCardView progressBar;
 
 
     @Override
@@ -59,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         intent = getIntent();
 
         isRedirected =intent.getBooleanExtra("isRedirected", false);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -149,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                                         intentRedirect.putExtra("eventId", intent.getStringExtra("eventId"));
                                         startActivity(intentRedirect);
                                     }
+                                    progressBar.setVisibility(View.GONE);
                                     finish();
                                 }
                             });
@@ -172,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 //                            new Utils().retrieveInfo();
+                            progressBar.setVisibility(View.VISIBLE);
                             Log.d("rk_debug", "signInWithCredential:success");
                             firebaseWork();
 //                            Toast.makeText(getApplicationContext(), R.string.login_success,

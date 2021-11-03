@@ -6,8 +6,10 @@
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.19583333333333333" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.19583333333333333" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_event_registration.xml" value="0.17685185185185184" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_login.xml" value="0.17552083333333332" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragment_dashboard.xml" value="0.17685185185185184" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragment_events.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragments_settings.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/my_event_view.xml" value="0.1796875" />
       </map>
