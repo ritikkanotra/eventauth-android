@@ -144,16 +144,16 @@
 <!--                    android:layout_width="wrap_content"-->
 <!--                    android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/layout_date"
-                        android:paddingHorizontal="16dp"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat"
-                        android:text="We know what all it takes to crack the most coveted programming contest in the world, and we’re sharing the mantra with you. This is your chance to make it big at the grandest stage of them all - the International Collegiate Programming Contest (ICPC). \n\nAn algorithmic programming contest for college students, the ICPC is where students participate in teams consisting of 3 participants from the same college. For all those eyeing for the grand win this year, CodeChef’s unique and specially curated ICPC Training series is here. \n\nWith sessions conducted by ICPC World Finalists and previous year Indian Regionals problem setters, learn how to become the maestro of the competition. Be a part of the weekly training series and be at the forefront of Competitive Programming."
-                        android:id="@+id/tv_event_about"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_event_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_date"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:paddingHorizontal="16dp"
+                    android:text="We know what all it takes to crack the most coveted programming contest in the world, and we’re sharing the mantra with you. This is your chance to make it big at the grandest stage of them all - the International Collegiate Programming Contest (ICPC). \n\nAn algorithmic programming contest for college students, the ICPC is where students participate in teams consisting of 3 participants from the same college. For all those eyeing for the grand win this year, CodeChef’s unique and specially curated ICPC Training series is here. \n\nWith sessions conducted by ICPC World Finalists and previous year Indian Regionals problem setters, learn how to become the maestro of the competition. Be a part of the weekly training series and be at the forefront of Competitive Programming."
+                    android:textSize="16sp" />
 
 <!--                </ScrollView>-->
 
@@ -172,15 +172,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_toLeftOf="@id/del_event_btn"
+            android:layout_marginVertical="7dp">
+
         <com.google.android.material.button.MaterialButton
-            android:layout_marginVertical="7dp"
             android:id="@+id/action_btn"
             android:text="@string/register"
             android:textColor="@android:color/white"
-            android:layout_toLeftOf="@id/del_event_btn"
             android:backgroundTint="@android:color/holo_green_dark"
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
+
+
+            <ProgressBar
+                android:id="@+id/pb_action_btn"
+                android:layout_centerInParent="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:layout_marginStart="10dp"
@@ -198,11 +211,7 @@
 
         </com.google.android.material.button.MaterialButton>
 
-        <ProgressBar
-            android:id="@+id/pb_action_btn"
-            android:layout_centerInParent="true"
-            android:layout_width="25dp"
-            android:layout_height="25dp"/>
+
 
     </RelativeLayout>
 
