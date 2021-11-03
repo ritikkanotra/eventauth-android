@@ -48,6 +48,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
         holder.dateTextView.setText(mMyEventsList.get(position).getDate());
         Glide.with(mContext)
                 .load(Uri.parse(mMyEventsList.get(position).getCoverPicUrl()))
+                .placeholder(R.drawable.placeholder_event)
                 .centerCrop().into(holder.coverImageView);
         holder.scanQrBtn.setOnClickListener(task -> {
             Intent scanIntent = new Intent(mContext, ScanQRActivity.class);
