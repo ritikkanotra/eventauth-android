@@ -40,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInAccount account;
     private boolean isRedirected;
     private Intent intent;
-    private MaterialCardView progressBar;
+    private MaterialCardView progressBar, loginGoogleBtn;
+
 
 
     @Override
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
+        loginGoogleBtn = findViewById(R.id.loginGoogleBtn);
 
         intent = getIntent();
 
@@ -171,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        loginGoogleBtn.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -179,7 +183,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 //                            new Utils().retrieveInfo();
-                            progressBar.setVisibility(View.VISIBLE);
                             Log.d("rk_debug", "signInWithCredential:success");
                             firebaseWork();
 //                            Toast.makeText(getApplicationContext(), R.string.login_success,
@@ -192,6 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w("rk_debug", "signInWithCredential:failure", task.getException());
                             Toast.makeText(getApplicationContext(), R.string.login_failed,
                                     Toast.LENGTH_SHORT).show();
+                            loginGoogleBtn.setEnabled(true);
                         }
 
                         // ...
