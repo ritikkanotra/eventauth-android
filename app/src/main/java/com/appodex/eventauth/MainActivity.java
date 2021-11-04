@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Glide.with(MainActivity.this)
                         .load(mAuth.getCurrentUser().getPhotoUrl())
-                        .circleCrop()
                         .placeholder(R.drawable.profile_avatar_placeholder_large)
+                        .circleCrop()
                         .into(userPhotoImageView);
             }
         }, 1000);
