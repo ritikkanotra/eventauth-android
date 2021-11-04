@@ -205,6 +205,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(event.getCoverPicUrl())
                 .centerCrop()
+                .placeholder(R.drawable.placeholder_event)
                 .into(eventCoverImageView);
 
 
