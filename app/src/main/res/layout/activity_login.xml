@@ -95,33 +95,34 @@
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_above="@id/privacy_text_ll"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="12dp"
-        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/privacy_text_ll"
+        android:layout_marginHorizontal="20dp"
+        android:clickable="true"
         android:focusable="true"
-        android:onClick="loginGoogle">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="loginGoogle"
+        android:id="@+id/loginGoogleBtn"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="12dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
-            android:paddingVertical="8dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:paddingVertical="8dp">
 
             <ImageView
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/icons8_google_48"
                 android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icons8_google_48" />
 
             <TextView
                 android:layout_width="wrap_content"
