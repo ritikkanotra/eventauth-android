@@ -1,19 +1,30 @@
 package com.appodex.eventauth;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -30,13 +42,16 @@ import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class EventRegistrationActivity extends AppCompatActivity {
 
-    private ImageView eventCoverImageView, backBtn;
+    private ImageView eventCoverImageView, backBtn, collabBtn;
     private MaterialButton actionBtn, delButton;
     private TextView eventNameTextView, dateTextView, timeTextView, aboutTextView, headingTextView;
     private ProgressBar actionBtnProgressBar;
@@ -45,12 +60,16 @@ public class EventRegistrationActivity extends AppCompatActivity {
     int intentType;
     private AlertDialog deleteAlertDialog;
     private ProgressDialog progressDialog;
+    private ArrayList<Collaborator> collaborators;
+    private CollaboratorsListAdapter adapter;
+    private ListView listView;
+    static String eventKeyPoint;
 
 
     Intent receivedIntent;
 
     Event event;
-    String eventId;
+    public static String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +91,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
         Log.d("rk_debug", "now");
 
+//        loadCollaborators();
+
 
 
         eventNameTextView = findViewById(R.id.tv_event_name);
@@ -83,6 +104,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         actionBtnProgressBar = findViewById(R.id.pb_action_btn);
         mainProgressBarLayout = findViewById(R.id.pb_layout);
         delButton = findViewById(R.id.del_event_btn);
+        collabBtn = findViewById(R.id.iv_collab_btn);
 //        shimmerFrameEventCover = findViewById(R.id.shimmer_frame_event_cover);
 //        shimmerFrameEventDetails = findViewById(R.id.shimmer_frame_event_details);
 
@@ -93,6 +115,69 @@ public class EventRegistrationActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back_btn);
 
         mainProgressBarLayout.setVisibility(View.VISIBLE);
+
+        collaborators = new ArrayList<>();
+
+        collabBtn.setVisibility(View.GONE);
+
+        adapter = new CollaboratorsListAdapter(this, collaborators);
+
+
+        collabBtn.setOnClickListener(task -> {
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View customView = layoutInflater.inflate(R.layout.add_collab_popup, null);
+
+//            ArrayList<String> data = new ArrayList<>();
+//            data.add("Ritik");
+//            data.add("Kanotra");
+
+//            collaborators.add(
+//                    new Collaborator("Ritik Kanotra", "rk@mail.com")
+//            );
+
+            Log.d("rk_debug", "this: " + collaborators.size());
+
+            listView = customView.findViewById(R.id.collaborators_list_view);
+            EditText addEmailET = customView.findViewById(R.id.et_add_email);
+            TextView closePopupBtn = customView.findViewById(R.id.close_popup_btn);
+            ImageView addCollabBtn = customView.findViewById(R.id.add_collab_btn);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, );
+//            adapter = new CollaboratorsListAdapter(this, collaborators);
+//            adapter.addAll(collaborators);
+            listView.setAdapter(adapter);
+
+            addCollabBtn.setOnClickListener(addCollabTask -> {
+                String newEmail = addEmailET.getText().toString();
+                Log.d("rk_debug", "newEmail: " + newEmail + collaborators.size());
+                ArrayList<String> collabEmails = new ArrayList<>();
+                for (Collaborator c: collaborators) {
+                    collabEmails.add(c.getEmail());
+                }
+                if (collabEmails.contains(newEmail)) {
+                    Toast.makeText(this, "Already a collaborator", Toast.LENGTH_SHORT).show();
+                }
+                else if (newEmail.equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
+                    Toast.makeText(this, "Can't add owner", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    addCollaborator(newEmail);
+                }
+            });
+
+
+
+            final PopupWindow popupWindow = new PopupWindow(
+                    customView,
+                    ViewGroup.LayoutParams.FILL_PARENT,
+                    ViewGroup.LayoutParams.FILL_PARENT
+            );
+
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.showAtLocation(collabBtn, Gravity.CENTER, 0, 0);
+            closePopupBtn.setOnClickListener(closeTask -> {
+                popupWindow.dismiss();
+            });
+        });
 
         backBtn.setOnClickListener(task -> {
             finish();
@@ -426,6 +511,8 @@ public class EventRegistrationActivity extends AppCompatActivity {
                             Log.d("rk_debug", eventId);
                             for (DataSnapshot data: snapshot.getChildren()) {
 
+                                eventKeyPoint = data.getKey();
+
                                 event = new Event(data.child("id").getValue().toString(),
                                         data.child("name").getValue().toString(),
                                         data.child("about").getValue().toString(),
@@ -433,8 +520,14 @@ public class EventRegistrationActivity extends AppCompatActivity {
                                         data.child("time").getValue().toString(),
                                         data.child("cover_image").getValue().toString());
 
-//                                checkLogin(event);
+                                if (data.child("owner").getValue().toString().equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
+                                    collabBtn.setVisibility(View.VISIBLE);
+                                }
 
+//                                checkLogin(event);
+                                if (data.child("shared_with").exists()) {
+                                    loadCollaborators(eventKeyPoint);
+                                }
                                 displayEventData(event);
                                 updateRegisterStatus();
                             }
@@ -447,4 +540,136 @@ public class EventRegistrationActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void addCollaborator(String email) {
+        Utils.firebaseDatabaseRef
+                .child("Events")
+                .orderByChild("id")
+                .equalTo(eventId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                String shared_with_new = "";
+                                String shared_with_old = "";
+                                Log.d("rk_debug", "onDataChange: " + eventKeyPoint);
+                                if (dataSnapshot.child("shared_with").exists()) {
+                                    shared_with_old = dataSnapshot.child("shared_with").getValue().toString();
+                                }
+                                shared_with_new = shared_with_old + email + ",";
+                                Utils.firebaseDatabaseRef
+                                        .child("Events")
+                                        .child(eventKeyPoint)
+                                        .child("shared_with")
+                                        .setValue(shared_with_new);
+//                                loadCollaborators(eventKeyPoint);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void loadCollaboratorsHelper(String data) {
+        adapter.clear();
+        collaborators.clear();
+        Log.d("rk_debug", "loadCollaborators: " + data);
+        List<String> emails = Arrays.asList(data.split(","));
+        Utils.firebaseDatabaseRef
+                .child("Users")
+                .orderByChild("email")
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        Log.d("rk_debug", "onChildAdded_1: ");
+                        Map<String, String> map = (Map<String, String>) snapshot.getValue();
+                        if (emails.contains(map.get("email"))) {
+                            collaborators.add(
+                                    new Collaborator(map.get("name"), map.get("email"))
+                            );
+                        }
+                        adapter.notifyDataSetChanged();
+//                        if (adapter != null) {
+//                            Log.d("rk_debug", "onChildAdded_2: ");
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                        Log.d("rk_debug", "onChildRemoved: ");
+                        int index = collaborators.indexOf(snapshot.getKey());
+                        collaborators.remove(index);
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+
+
+                });
+    }
+
+    public void loadCollaborators(String eventKeyPoint) {
+
+        Log.d("rk_debug", "loadCollaborators: ");
+
+        Utils.firebaseDatabaseRef
+                .child("Events")
+                .child(eventKeyPoint)
+                .child("shared_with")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("rk_debug", "onDataChange: " + snapshot.getValue());
+                        loadCollaboratorsHelper(snapshot.getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+    }
+
+//    private void loadCollaborators(String data) {
+////        adapter.clear();
+//        Log.d("rk_debug", "loadCollaborators: " + data);
+//        List<String> emails = Arrays.asList(data.split(","));
+//        Utils.firebaseDatabaseRef
+//                .child("Users")
+//                .orderByChild("email")
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//    }
 }

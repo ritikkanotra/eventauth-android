@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="60dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_marginBottom="12dp"
@@ -30,6 +30,16 @@
         android:fontFamily="@font/nunito_extrabold"
         android:text="@string/event_registration"
         android:textSize="24sp" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/iv_collab_btn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        android:src="@drawable/ic_baseline_group_24" />
 
 <!--    <com.facebook.shimmer.ShimmerFrameLayout-->
 <!--        android:layout_below="@id/tv_heading"-->

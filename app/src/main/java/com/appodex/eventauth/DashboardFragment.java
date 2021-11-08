@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 //                            myEventsList.clear();
+                            Log.d("rk_debug", "onChildAdded: ");
                             Map<String, String> map = (Map<String, String>) snapshot.getValue();
                             List<String> sharedWith = new ArrayList<>();
                             String sharedBy = null;

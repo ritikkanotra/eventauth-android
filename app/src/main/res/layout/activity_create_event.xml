@@ -41,95 +41,93 @@
         android:layout_height="wrap_content"/>
 
     <ScrollView
-        android:layout_below="@id/tv_heading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_heading">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
-                app:cardCornerRadius="0dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="0dp">
 
                 <ImageView
                     android:id="@+id/iv_event_cover"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+                    android:layout_height="200dp" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="12dp"
+                android:hint="Name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_event_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="12dp"
+                android:hint="Date">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:focusable="false"
                     android:id="@+id/et_event_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:focusable="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Time"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="12dp"
+                android:hint="Time">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_event_time"
-                    android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:editable="false"/>
+                    android:editable="false"
+                    android:focusable="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginHorizontal="15dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:hint="About"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:hint="About">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_event_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"/>
+                    android:gravity="start" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
         </LinearLayout>
