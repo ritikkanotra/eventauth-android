@@ -202,6 +202,7 @@ public class CreateEventActivity extends AppCompatActivity {
         newEventInfo.put("about", eventAbout);
         newEventInfo.put("cover_image", coverDownloadUrl);
         newEventInfo.put("owner", Utils.firebaseAuth.getCurrentUser().getEmail());
+        newEventInfo.put("shared_with", "");
 
         Utils.firebaseDatabaseRef
                 .child("Events")
