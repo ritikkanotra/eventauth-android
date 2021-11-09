@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -64,14 +67,24 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 //                            myEventsList.clear();
+                            Log.d("rk_debug", "onChildAdded: ");
                             Map<String, String> map = (Map<String, String>) snapshot.getValue();
-                            if (map.get("owner").equals(mAuth.getCurrentUser().getEmail())) {
+                            List<String> sharedWith = new ArrayList<>();
+                            String sharedBy = null;
+                            if (map.containsKey("shared_with")) {
+                                sharedWith = Arrays.asList(map.get("shared_with").split(","));
+                                if (sharedWith.contains(mAuth.getCurrentUser().getEmail())) {
+                                    sharedBy = map.get("owner");
+                                }
+                            }
+                            if (map.get("owner").equals(mAuth.getCurrentUser().getEmail()) ||
+                                sharedWith.contains(mAuth.getCurrentUser().getEmail())) {
                                 myEventsList.add(0, new Event(map.get("id"),
                                         map.get("name"),
                                         map.get("about"),
                                         map.get("date"),
                                         map.get("time"),
-                                        map.get("cover_image")));
+                                        map.get("cover_image"), sharedBy));
                                 keyList.add(0, snapshot.getKey());
                             }
 

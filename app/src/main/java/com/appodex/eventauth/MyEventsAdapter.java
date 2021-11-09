@@ -43,26 +43,35 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
 
     @Override
     public void onBindViewHolder(@NonNull MyEventsAdapter.MyEventHolder holder, int position) {
-        holder.nameTextView.setText(mMyEventsList.get(position).getName());
+        Event event = mMyEventsList.get(position);
+        holder.nameTextView.setText(event.getName());
         holder.nameTextView.setSelected(true);
-        holder.dateTextView.setText(mMyEventsList.get(position).getDate());
+        holder.dateTextView.setText(event.getDate());
         Glide.with(mContext)
-                .load(Uri.parse(mMyEventsList.get(position).getCoverPicUrl()))
+                .load(Uri.parse(event.getCoverPicUrl()))
                 .placeholder(R.drawable.placeholder_event)
                 .centerCrop().into(holder.coverImageView);
         holder.scanQrBtn.setOnClickListener(task -> {
             Intent scanIntent = new Intent(mContext, ScanQRActivity.class);
-            scanIntent.putExtra("event_id", mMyEventsList.get(position).getEventId());
+            scanIntent.putExtra("event_id", event.getEventId());
             mContext.startActivity(scanIntent);
         });
 
         holder.itemView.setOnClickListener(task -> {
             Intent intent = new Intent(mContext, EventRegistrationActivity.class);
             intent.putExtra("type", Utils.TYPE_SHARE);
-            intent.putExtra("eventId", mMyEventsList.get(position).getEventId());
+            intent.putExtra("eventId", event.getEventId());
             intent.putExtra("position", position);
             mContext.startActivity(intent);
         });
+
+        if (event.getSharedBy() == null) {
+            holder.sharedByTextView.setVisibility(View.GONE);
+        }
+        else {
+            holder.sharedByTextView.setVisibility(View.VISIBLE);
+            holder.sharedByTextView.setText("Shared by " + event.getSharedBy());
+        }
     }
 
     @Override
@@ -73,7 +82,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
     public class MyEventHolder extends RecyclerView.ViewHolder{
 
         ImageView coverImageView;
-        TextView nameTextView, dateTextView;
+        TextView nameTextView, dateTextView, sharedByTextView;
         ImageView scanQrBtn;
 
         public MyEventHolder(@NonNull View itemView) {
@@ -83,6 +92,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
             nameTextView = itemView.findViewById(R.id.tv_event_name);
             dateTextView = itemView.findViewById(R.id.tv_event_date);
             scanQrBtn = itemView.findViewById(R.id.btn_scan_qr);
+            sharedByTextView = itemView.findViewById(R.id.tv_shared_by);
 
         }
     }

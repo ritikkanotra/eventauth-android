@@ -3,15 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.10208333333333333" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_done_24.xml" value="0.15416666666666667" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_group_24.xml" value="0.10208333333333333" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_keyboard_arrow_up_24.xml" value="0.1" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_person_add_24.xml" value="0.153125" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.19583333333333333" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.19583333333333333" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/drawable/ic_round_done_24.xml" value="0.153125" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_create_event.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_event_registration.xml" value="0.17685185185185184" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_login.xml" value="0.17552083333333332" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/add_collab_popup.xml" value="0.22" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/collaborators_list_item.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragment_dashboard.xml" value="0.17685185185185184" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragment_events.xml" value="0.22" />
         <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/fragments_settings.xml" value="0.22" />
-        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/my_event_view.xml" value="0.1796875" />
+        <entry key="..\:/DATA/AndroidStudioProjects/EventAuth/app/src/main/res/layout/my_event_view.xml" value="0.22" />
       </map>
     </option>
   </component>

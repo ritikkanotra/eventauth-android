@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:minHeight="600dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:orientation="vertical"
+            android:id="@+id/add_collab_popup_ll">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    android:layout_width="0dp"
+                    android:foregroundTint="@android:color/black"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="Enter Email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textEmailAddress"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:id="@+id/et_add_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="?actionBarItemBackground"
+                    android:id="@+id/add_collab_btn"
+                    android:src="@drawable/ic_baseline_person_add_24"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_marginTop="12dp"
+                android:background="?attr/colorControlNormal"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+            <TextView
+                android:textSize="24sp"
+                android:layout_marginVertical="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Collaborators"/>
+
+            <ListView
+                android:divider="@android:color/holo_red_light"
+                android:id="@+id/collaborators_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
