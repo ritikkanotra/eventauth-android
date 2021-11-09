@@ -33,6 +33,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -123,64 +124,71 @@ public class EventRegistrationActivity extends AppCompatActivity {
         adapter = new CollaboratorsListAdapter(this, collaborators);
 
 
-        collabBtn.setOnClickListener(task -> {
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View customView = layoutInflater.inflate(R.layout.add_collab_popup, null);
-
-//            ArrayList<String> data = new ArrayList<>();
-//            data.add("Ritik");
-//            data.add("Kanotra");
-
-//            collaborators.add(
-//                    new Collaborator("Ritik Kanotra", "rk@mail.com")
+//        collabBtn.setOnClickListener(task -> {
+//            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//            View customView = layoutInflater.inflate(R.layout.add_collab_popup, null);
+//
+////            ArrayList<String> data = new ArrayList<>();
+////            data.add("Ritik");
+////            data.add("Kanotra");
+//
+////            collaborators.add(
+////                    new Collaborator("Ritik Kanotra", "rk@mail.com")
+////            );
+//
+//            Log.d("rk_debug", "this: " + collaborators.size());
+//
+//            listView = customView.findViewById(R.id.collaborators_list_view);
+//            EditText addEmailET = customView.findViewById(R.id.et_add_email);
+//            TextView closePopupBtn = customView.findViewById(R.id.close_popup_btn);
+//            ImageView addCollabBtn = customView.findViewById(R.id.add_collab_btn);
+////            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, );
+////            adapter = new CollaboratorsListAdapter(this, collaborators);
+////            adapter.addAll(collaborators);
+//            listView.setAdapter(adapter);
+//
+//            addCollabBtn.setOnClickListener(addCollabTask -> {
+//                String newEmail = addEmailET.getText().toString();
+//                Log.d("rk_debug", "newEmail: " + newEmail + collaborators.size());
+//                ArrayList<String> collabEmails = new ArrayList<>();
+//                for (Collaborator c: collaborators) {
+//                    collabEmails.add(c.getEmail());
+//                }
+//                if (collabEmails.contains(newEmail)) {
+//                    Toast.makeText(this, "Already a collaborator", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (newEmail.equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
+//                    Toast.makeText(this, "Can't add owner", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    addCollaborator(newEmail);
+//                }
+//            });
+//
+//
+//
+//            final PopupWindow popupWindow = new PopupWindow(
+//                    customView,
+//                    ViewGroup.LayoutParams.FILL_PARENT,
+//                    ViewGroup.LayoutParams.FILL_PARENT
 //            );
-
-            Log.d("rk_debug", "this: " + collaborators.size());
-
-            listView = customView.findViewById(R.id.collaborators_list_view);
-            EditText addEmailET = customView.findViewById(R.id.et_add_email);
-            TextView closePopupBtn = customView.findViewById(R.id.close_popup_btn);
-            ImageView addCollabBtn = customView.findViewById(R.id.add_collab_btn);
-//            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, );
-//            adapter = new CollaboratorsListAdapter(this, collaborators);
-//            adapter.addAll(collaborators);
-            listView.setAdapter(adapter);
-
-            addCollabBtn.setOnClickListener(addCollabTask -> {
-                String newEmail = addEmailET.getText().toString();
-                Log.d("rk_debug", "newEmail: " + newEmail + collaborators.size());
-                ArrayList<String> collabEmails = new ArrayList<>();
-                for (Collaborator c: collaborators) {
-                    collabEmails.add(c.getEmail());
-                }
-                if (collabEmails.contains(newEmail)) {
-                    Toast.makeText(this, "Already a collaborator", Toast.LENGTH_SHORT).show();
-                }
-                else if (newEmail.equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
-                    Toast.makeText(this, "Can't add owner", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    addCollaborator(newEmail);
-                }
-            });
-
-
-
-            final PopupWindow popupWindow = new PopupWindow(
-                    customView,
-                    ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.FILL_PARENT
-            );
-
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.showAtLocation(collabBtn, Gravity.CENTER, 0, 0);
-            closePopupBtn.setOnClickListener(closeTask -> {
-                popupWindow.dismiss();
-            });
-        });
-
+//
+//            popupWindow.setOutsideTouchable(true);
+//            popupWindow.showAtLocation(collabBtn, Gravity.CENTER, 0, 0);
+//            closePopupBtn.setOnClickListener(closeTask -> {
+//                popupWindow.dismiss();
+//            });
+//        });
+//
         backBtn.setOnClickListener(task -> {
             finish();
+        });
+
+        collabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCollabBottomSheet();
+            }
         });
 
         delButton.setOnClickListener(task -> {
@@ -672,4 +680,46 @@ public class EventRegistrationActivity extends AppCompatActivity {
 //                });
 //
 //    }
+
+    private void showCollabBottomSheet() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.add_collab_popup);
+
+        ImageView addCollabBtn = bottomSheetDialog.findViewById(R.id.add_collab_btn);
+        EditText addEmailET = bottomSheetDialog.findViewById(R.id.et_add_email);
+
+        addCollabBtn.setOnClickListener(addCollabTask -> {
+                String newEmail = addEmailET.getText().toString();
+                Log.d("rk_debug", "newEmail: " + newEmail + collaborators.size());
+                ArrayList<String> collabEmails = new ArrayList<>();
+                for (Collaborator c: collaborators) {
+                    collabEmails.add(c.getEmail());
+                }
+                if (collabEmails.contains(newEmail)) {
+                    Toast.makeText(this, "Already a collaborator", Toast.LENGTH_SHORT).show();
+                }
+                else if (newEmail.equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
+                    Toast.makeText(this, "Can't add owner", Toast.LENGTH_SHORT).show();
+                }
+                else if (newEmail.isEmpty()) {
+                    Toast.makeText(this, "Empty email", Toast.LENGTH_SHORT).show();
+                }
+//                else if (!isEmailRegistered(newEmail)) {
+//                    Toast.makeText(this, "Email not registered", Toast.LENGTH_SHORT).show();
+//                }
+                else {
+                    Log.d("'rk_debug'", "showCollabBottomSheet: ");
+                    addCollaborator(newEmail);
+                }
+            });
+        listView = bottomSheetDialog.findViewById(R.id.collaborators_list_view);
+        assert listView != null;
+        listView.setAdapter(adapter);
+
+//        bottomSheetDialog.getBehavior().setPeekHeight(350);
+
+
+        bottomSheetDialog.show();
+    }
+
 }

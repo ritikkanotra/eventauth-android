@@ -13,20 +13,19 @@
         android:textSize="18sp" />
 
     <TextView
-        android:layout_toLeftOf="@id/remove_btn"
-        android:layout_below="@id/tv_name"
         android:id="@+id/tv_email"
-        android:text="ritikkanotra@gmail.com"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_toLeftOf="@id/remove_btn"
+        android:text="ritikkanotra@gmail.com" />
 
     <ImageView
-        android:layout_centerVertical="true"
         android:id="@+id/remove_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_baseline_close_24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:tint="@android:color/holo_red_dark" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/close_64"/>
 
 </RelativeLayout>
