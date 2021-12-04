@@ -6,25 +6,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +42,7 @@ import java.util.Objects;
 
 public class EventRegistrationActivity extends AppCompatActivity {
 
-    private ImageView eventCoverImageView, backBtn, collabBtn;
+    private ImageView eventCoverImageView, backBtn, collabBtn, editBtn;
     private MaterialButton actionBtn, delButton;
     private TextView eventNameTextView, dateTextView, timeTextView, aboutTextView, headingTextView;
     private ProgressBar actionBtnProgressBar;
@@ -106,6 +96,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         mainProgressBarLayout = findViewById(R.id.pb_layout);
         delButton = findViewById(R.id.del_event_btn);
         collabBtn = findViewById(R.id.iv_collab_btn);
+        editBtn = findViewById(R.id.iv_edit_btn);
 //        shimmerFrameEventCover = findViewById(R.id.shimmer_frame_event_cover);
 //        shimmerFrameEventDetails = findViewById(R.id.shimmer_frame_event_details);
 
@@ -120,6 +111,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
         collaborators = new ArrayList<>();
 
         collabBtn.setVisibility(View.GONE);
+        editBtn.setVisibility(View.GONE);
 
         adapter = new CollaboratorsListAdapter(this, collaborators);
 
@@ -190,6 +182,12 @@ public class EventRegistrationActivity extends AppCompatActivity {
                 showCollabBottomSheet();
             }
         });
+
+        editBtn.setOnClickListener(task -> {
+            editEvent();
+        });
+
+
 
         delButton.setOnClickListener(task -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -530,6 +528,7 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
                                 if (data.child("owner").getValue().toString().equals(Utils.firebaseAuth.getCurrentUser().getEmail())) {
                                     collabBtn.setVisibility(View.VISIBLE);
+                                    editBtn.setVisibility(View.VISIBLE);
                                 }
 
 //                                checkLogin(event);
@@ -720,6 +719,14 @@ public class EventRegistrationActivity extends AppCompatActivity {
 
 
         bottomSheetDialog.show();
+    }
+
+    private void editEvent() {
+
+        Intent intent = new Intent(EventRegistrationActivity.this, CreateOrUpdateEventActivity.class);
+        intent.putExtra("event", event);
+        startActivity(intent);
+        finish();
     }
 
 }

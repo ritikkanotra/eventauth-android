@@ -96,7 +96,15 @@ public class DashboardFragment extends Fragment {
 
                         @Override
                         public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            Map<String, String> map = (Map<String, String>) snapshot.getValue();
+                            int index = keyList.indexOf(snapshot.getKey());
+                            Event event = myEventsList.get(index);
+                            event.setName(map.get("name"));
+                            event.setSummary(map.get("summary"));
+                            event.setTime(map.get("time"));
+                            event.setCoverPicUrl(map.get("cover_image"));
 
+                            myEventsAdapter.notifyDataSetChanged();
                         }
 
                         @Override
