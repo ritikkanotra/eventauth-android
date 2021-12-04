@@ -1,9 +1,12 @@
 
 package com.appodex.eventauth;
 
+import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -22,11 +25,26 @@ public class SplashActivity extends AppCompatActivity {
     private Utils utils;
     private ImageView logoImageView, ritikkanotraImageView;
     private String currentVersion;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
+
+        sharedPreferences = getSharedPreferences(Utils.PREFS_NAME, 0);
+        String currentTheme = sharedPreferences.getString("theme", "dark");
+        Log.d("rk_debug_", "onCreate: " + currentTheme);
+        if (currentTheme.equals(Utils.DARK_THEME)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            Log.d("rk_debug", "onCreate: " + "dark");
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//            Log.d("rk_debug", "onCreate: " + "light");
+        }
 
 //        logoImageView = findViewById(R.id.iv_logo);
         ritikkanotraImageView = findViewById(R.id.iv_ritikkanotra_logo);
@@ -79,6 +97,8 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, 1000);
+
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
 

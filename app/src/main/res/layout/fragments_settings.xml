@@ -44,6 +44,48 @@
 
         <View style="@style/Divider"/>
 
+        <RelativeLayout
+            android:clickable="true"
+            android:background="?android:selectableItemBackground"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="18dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/theme_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/change_theme_icon"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_toRightOf="@id/theme_icon"
+                android:fontFamily="@font/montserrat"
+                android:text="Theme"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/theme_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown">
+
+            </Spinner>
+
+        </RelativeLayout>
+
+        <View style="@style/Divider"/>
+
+
 
 
 
