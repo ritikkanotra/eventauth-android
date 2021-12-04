@@ -11,8 +11,8 @@ android {
         applicationId "com.appodex.eventauth"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 1111111128
-        versionName "0.25b"
+        versionCode 1111111129
+        versionName "0.27b"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
