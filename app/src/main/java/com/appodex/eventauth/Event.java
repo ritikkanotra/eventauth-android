@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
     private final String mEventId;
-    private final String mName, mSummary, mDate, mTime, mCoverPicUrl, mSharedBy;
+    private String mName, mSummary, mDate, mTime, mCoverPicUrl, mSharedBy;
 
     public Event(String eventId,
                  String name,
@@ -63,5 +63,25 @@ public class Event implements Serializable {
 
     public String getSharedBy() {
         return mSharedBy;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
+    }
+
+    public void setSummary(String summary) {
+        this.mSummary = summary;
+    }
+
+    public void setDate(String date) {
+        this.mDate = date;
+    }
+
+    public void setTime(String time) {
+        this.mTime = time;
+    }
+
+    public void setCoverPicUrl(String coverPicUrl) {
+        this.mCoverPicUrl = coverPicUrl;
     }
 }

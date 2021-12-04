@@ -32,7 +32,7 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateEventActivity" />
+        <activity android:name=".CreateOrUpdateEventActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

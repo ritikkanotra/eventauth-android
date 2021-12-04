@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnCreateEvent = findViewById(R.id.btn_create_event);
         btnCreateEvent.setOnClickListener(task -> {
-            Intent intent = new Intent(this, CreateEventActivity.class);
+            Intent intent = new Intent(this, CreateOrUpdateEventActivity.class);
             startActivity(intent);
         });
         hideBtnCreateEvent();
