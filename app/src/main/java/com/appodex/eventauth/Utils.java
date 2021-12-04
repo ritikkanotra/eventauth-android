@@ -26,6 +26,11 @@ public class Utils {
     static final int TYPE_SHARE = 1;
     static final int TYPE_REGISTER = 2;
 
+    static final String DARK_THEME = "Dark";
+    static final String LIGHT_THEME = "Light";
+
+    static final String PREFS_NAME = "com.appodex.eventauth.PREFS_MAIN";
+
     static ArrayList<String> registeredEventsUCode = new ArrayList<>();
 
     Utils() {
