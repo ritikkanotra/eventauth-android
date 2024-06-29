@@ -1,7 +1,6 @@
 
-package com.appodex.eventauth;
+package com.appodex.eventauth2;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -9,12 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;

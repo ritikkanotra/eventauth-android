@@ -1,21 +1,16 @@
-package com.appodex.eventauth;
+package com.appodex.eventauth2;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Utils {
 
@@ -29,7 +24,7 @@ public class Utils {
     static final String DARK_THEME = "Dark";
     static final String LIGHT_THEME = "Light";
 
-    static final String PREFS_NAME = "com.appodex.eventauth.PREFS_MAIN";
+    static final String PREFS_NAME = "com.appodex.eventauth2.PREFS_MAIN";
 
     static ArrayList<String> registeredEventsUCode = new ArrayList<>();
 

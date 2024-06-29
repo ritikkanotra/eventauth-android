@@ -1,10 +1,7 @@
-package com.appodex.eventauth;
+package com.appodex.eventauth2;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEventHolder> {
 

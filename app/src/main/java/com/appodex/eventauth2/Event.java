@@ -1,4 +1,4 @@
-package com.appodex.eventauth;
+package com.appodex.eventauth2;
 
 import java.io.Serializable;
 

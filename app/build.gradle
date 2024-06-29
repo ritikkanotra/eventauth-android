@@ -7,13 +7,13 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.appodex.eventauth"
+        applicationId "com.appodex.eventauth2"
         minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 1111111129
+        targetSdkVersion 33
+        versionCode 1111111131
         versionName "0.27b"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -26,7 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.appodex.eventauth'
+    namespace 'com.appodex.eventauth2'
     lint {
         abortOnError false
         checkReleaseBuilds false
@@ -44,8 +44,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'org.jetbrains:annotations:15.0'
     testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
