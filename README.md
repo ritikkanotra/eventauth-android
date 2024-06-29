@@ -2,6 +2,15 @@
 
 **EventAuth** is an Android application designed to streamline event management for organizers by providing features for creating, organizing, and securely authenticating participants using QR codes.
 
+### Screenshots
+
+![Image 1](external_resources/app_sc/image1_50.jpeg)
+![Image 2](external_resources/app_sc/image2_50.jpeg)
+![Image 3](external_resources/app_sc/image3_50.jpeg)
+![Image 4](external_resources/app_sc/image4_50.jpeg)
+![Image 5](external_resources/app_sc/image5_50.jpeg)
+
+
 ### Features
 
 * **Event Creation:** Effortlessly create new events with customizable details like name, date, location, and description.
