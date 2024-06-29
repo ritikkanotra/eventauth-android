@@ -49,7 +49,7 @@
 
 * Android SDK
 * Firebase (Authentication, Realtime Database)
-* QR Code Generation and Scanning Libraries (Specific libraries to be mentioned upon integration)
+* QR Code Generation and Scanning Libraries - **ZXing** (Specific libraries to be mentioned upon integration)
 
 ### Contributing
 
@@ -61,10 +61,4 @@ This project is licensed under the MIT License.
 
 ### Support
 
-For any questions or issues, please contact [Your Contact Information].
-
-**Please note:**
-
-* This is a template. Feel free to customize it further based on additional features your app has.
-* Replace `[Your Contact Information]` with your preferred method of contact (e.g., email address).
-* Update the `Technologies Used` section with the specific QR code libraries you've integrated.
+For any questions or issues, please contact `ritikkanotra@gmail.com`.
