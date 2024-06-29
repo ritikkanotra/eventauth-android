@@ -6,7 +6,7 @@
     <string name="my_events">My Events</string>
     <string name="login">Login</string>
     <string name="login_google">Login with Google</string>
-    <!--    <string name="default_web_client_id">745918612413-btug6um23fa0lbhgo5e5gtl2p6uvl9pa.apps.googleusercontent.com</string>-->
+    <string name="default_web_client_id">745918612413-btug6um23fa0lbhgo5e5gtl2p6uvl9pa.apps.googleusercontent.com</string>
     <string name="login_success">Login Success</string>
     <string name="login_failed">Login Failed</string>
     <string name="create_event">Create Event</string>

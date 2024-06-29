@@ -15,6 +15,62 @@
       },
       "oauth_client": [
         {
+          "client_id": "745918612413-97h23pbg2cm39h37b4723nucmbg14p1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "1c8aa739f6084f35eeb8e7c5a0f353d678c008fa"
+          }
+        },
+        {
+          "client_id": "745918612413-a4brrdtiv37uu79vpai8kg43o4lpv49e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "e93094a4dc25ae1d00aaefe9c22d0dc3daccdbfa"
+          }
+        },
+        {
+          "client_id": "745918612413-jcvk27otp4do1oapd3mejes9km6v12u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "a7f0968184885608d892c2abb9fa511c7f964942"
+          }
+        },
+        {
+          "client_id": "745918612413-lshk368ejuglbo6jo7feosq938biti8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "d45606fe9d1f0feb28018b2cd6f78c5b8b1e3e14"
+          }
+        },
+        {
+          "client_id": "745918612413-qhbm4ffbmvultr34dmhou31tf46ndpqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "b757610884e22332b7c36291b6e0f61161fe487b"
+          }
+        },
+        {
+          "client_id": "745918612413-rci2kj51hmn5mq6jncmuff6v8b31hgd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "39a5f7fb8ef2b41d6db17948ec228d56da7aac49"
+          }
+        },
+        {
+          "client_id": "745918612413-t10dd2k5vhe0j12k99c86sg6k34h8a17.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appodex.eventauth",
+            "certificate_hash": "ad86ca9aaf016af8df11176602cdba7c910cf927"
+          }
+        },
+        {
           "client_id": "745918612413-btug6um23fa0lbhgo5e5gtl2p6uvl9pa.apps.googleusercontent.com",
           "client_type": 3
         }
