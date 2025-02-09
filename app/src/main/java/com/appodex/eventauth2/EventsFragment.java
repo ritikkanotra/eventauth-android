@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class EventsFragment extends Fragment {
 
@@ -95,7 +96,7 @@ public class EventsFragment extends Fragment {
         Utils.firebaseDatabaseRef
                 .child("Users")
                 .orderByChild("email")
-                .equalTo(mAuth.getCurrentUser().getEmail())
+                .equalTo(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,7 +109,7 @@ public class EventsFragment extends Fragment {
                                 DataSnapshot eventsSnapshot = dataSnapshot.child("registeredEvents");
                                 Iterable<DataSnapshot> eventChildren = eventsSnapshot.getChildren();
                                 for (DataSnapshot childSnapshot : eventChildren) {
-                                    Log.i("rk_debug_rg_events", childSnapshot.getKey());
+                                    Log.i("rk_debug_rg_events", Objects.requireNonNull(childSnapshot.getKey()));
                                     registeredEventsId.add(childSnapshot.getKey());
                                     registeredEventsUCode.add(childSnapshot.child("uniqueCode").getValue().toString());
                                 }
@@ -146,7 +147,7 @@ public class EventsFragment extends Fragment {
                                             childSnapshot.child("cover_image").getValue().toString()
                                             );
                                     try {
-                                        if ((new SimpleDateFormat("dd/MM/yyyy")).parse(event.getDate()).compareTo(currentDate) >= 0) {
+                                        if (Objects.requireNonNull((new SimpleDateFormat("dd/MM/yyyy")).parse(event.getDate())).compareTo(currentDate) >= 0) {
                                             registeredEventsList.add(event);
                                         }
                                     } catch (ParseException e) {

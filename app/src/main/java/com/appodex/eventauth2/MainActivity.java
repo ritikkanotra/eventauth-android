@@ -19,6 +19,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         downloadUpdate();
-        updateApp();
+//        updateAppNew();
 
 
 
@@ -281,51 +283,97 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateApp() {
+//    private void updateApp() {
+//
+//        BroadcastReceiver onComplete = new BroadcastReceiver() {
+//            public void onReceive(Context ctxt, Intent intent) {
+//
+//                updateProgressDialog.dismiss();
+//
+//                Intent install = new Intent(Intent.ACTION_VIEW);
+//                File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/" + getPackageName() + "/.updates/CoronavirusTracker.apk");
+//                Uri data = FileProvider.getUriForFile(MainActivity.this, BuildConfig.APPLICATION_ID +".provider",file);
+//                Log.i("testing", data.getPath());
+//                install.setDataAndType(data,"application/vnd.android.package-archive");
+//                install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(install);
+//
+//                unregisterReceiver(this);
+//                finish();
+//            }
+//        };
+//        //register receiver for when .apk download is compete
+//        registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_NOT_EXPORTED);
+//
+//    }
 
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            public void onReceive(Context ctxt, Intent intent) {
 
-                updateProgressDialog.dismiss();
+//    private void updateAppNew() {
+//        BroadcastReceiver onComplete = new BroadcastReceiver() {
+//            public void onReceive(Context ctxt, Intent intent) {
+//                updateProgressDialog.dismiss();
+//
+//                Intent install = new Intent(Intent.ACTION_VIEW);
+//                String fileName = "CoronavirusTracker.apk"; // Or get it dynamically
+//                File file = new File(
+//                        Environment.getExternalStorageDirectory(),
+//                        "/Android/data/" + ctxt.getPackageName() + "/.updates/" + fileName
+//                );
+//
+//                try {
+//                    if (!file.exists()) {
+//                        Log.e("UpdateApp", "File not found: " + file.getAbsolutePath());
+//                        // Handle the error (e.g., show a message to the user)
+//                        return;
+//                    }
+//                    Uri data = FileProvider.getUriForFile(
+//                            MainActivity.this,
+//                            ctxt.getPackageName() + ".provider", // Use ctxt.getPackageName() here
+//                            file
+//                    );
+//                    Log.i("testing", data.getPath());
+//                    install.setDataAndType(data, "application/vnd.android.package-archive");
+//                    install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(install);
+//                } catch (IllegalArgumentException e) {
+//                    Log.e("UpdateApp", "FileProvider error: " + e.getMessage());
+//                    // Handle the error (e.g., show a message to the user)
+//                } finally {
+//                    MainActivity.this.unregisterReceiver(this);
+//                    MainActivity.this.finish();
+//                }
+//            }
+//        };
+//        //register receiver for when .apk download is complete
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_NOT_EXPORTED);
+//        } else {
+//            registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_NOT_EXPORTED);
+//        }
+//    }
 
-                Intent install = new Intent(Intent.ACTION_VIEW);
-                File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/" + getPackageName() + "/.updates/CoronavirusTracker.apk");
-                Uri data = FileProvider.getUriForFile(MainActivity.this, BuildConfig.APPLICATION_ID +".provider",file);
-                Log.i("testing", data.getPath());
-                install.setDataAndType(data,"application/vnd.android.package-archive");
-                install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(install);
-
-                unregisterReceiver(this);
-                finish();
-            }
-        };
-        //register receiver for when .apk download is compete
-        registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-    }
-
-    private String getRealVersionDownloadUrl() {
-
-        mDatabaseRef.child("app_version").child("version_url").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                realVersionDownloadUrl = dataSnapshot.getValue().toString();
-                Log.i("testing", realVersionDownloadUrl);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return realVersionDownloadUrl;
-
-    }
+//    private String getRealVersionDownloadUrl() {
+//
+//        mDatabaseRef.child("app_version").child("version_url").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                realVersionDownloadUrl = dataSnapshot.getValue().toString();
+//                Log.i("testing", realVersionDownloadUrl);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        return realVersionDownloadUrl;
+//
+//    }
 
     private void showBtnCreateEvent() {
         btnCreateEvent.setVisibility(View.VISIBLE);
