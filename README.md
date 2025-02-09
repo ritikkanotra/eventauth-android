@@ -51,6 +51,10 @@
 * Firebase (Authentication, Realtime Database)
 * QR Code Generation and Scanning Libraries - **ZXing** (Specific libraries to be mentioned upon integration)
 
+### Amazon Appstore Published Link
+
+[Downlaod here](https://www.amazon.com/dp/B0DVRKNR3Q/ref=apps_sf_sta)
+
 ### Contributing
 
 We welcome contributions! If you'd like to contribute to EventAuth, please fork the repository and submit a pull request with your changes.
